@@ -28,6 +28,11 @@ Route::group(['prefix' => 'v1', 'middleware' => 'guest:api'], function () {
 | API with Token required
 */
 Route::group(['prefix' => 'v1', 'middleware' => 'auth:api'], function () {
+    Route::get('/transactions', 'API\TransactionController@index')->where([
+        'type' => '[A-Za-z0-9]+',
+        'from' => '[A-Za-z]+|\d{4}(?:-\d{1,2}){2}',
+        'to' => '[A-Za-z]+|\d{4}(?:-\d{1,2}){2}'
+    ])->name('api.txs');
     Route::post('/upload', 'API\BusinessController@uploadFile')->name('api.upload');
 });
 
