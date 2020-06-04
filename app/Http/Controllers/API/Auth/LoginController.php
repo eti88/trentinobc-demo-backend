@@ -26,10 +26,6 @@ class LoginController extends Controller
         }
 
         if ($user) {
-            
-            if($user->status != 1) {
-                return response()->json(['message' => 'Il tuo utente è disabilitato.'], 403);
-            }
 
             if (Hash::check($request->password, $user->password)) {
                 $token = $user->createToken('Laravel Password Grant Client')->accessToken;
