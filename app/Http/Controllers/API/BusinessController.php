@@ -49,9 +49,10 @@ class BusinessController extends Controller
 
             Storage::delete($path);
             $tmp = json_decode($confirmation);
+            \Log::info($tmp);
             $item = Transaction::create([
                 'type' => 'FILE',
-                'hash' => $tmp->txhash,
+                'hash' => $tmp['txhash'],
                 'fileName' => $filename,
                 'extension' => $file->getClientOriginalExtension()
             ]);
