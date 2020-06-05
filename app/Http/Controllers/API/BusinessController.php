@@ -37,14 +37,14 @@ class BusinessController extends Controller
             $filename = $file->getClientOriginalName();
             $NEW_FILE_NAME = md5($filename . microtime());
             $path = $file->storeAs('tmp', $NEW_FILE_NAME . '.' . $file->getClientOriginalExtension());
-            \Log::info('tmp file path: ' . $path);
+            $path = storage_path('app') . '/' . $path;
+
             // vars
             $s1 = date('YmdHisu');
             $s2 = date('YmdHisu') - 22;
             $s3 = storage_path('app/tmp/') . 'meta.json';
-            shell_exec('RH1=$(/root/go/bin/bitsongcli keys show faucet -a --keyring-backend=test)');
+            shell_exec('RH1=bitsong1e35r5dyd7xmg8f790sy9nmfhwxqf3zw9mqppez');
             $cmd = '/root/go/bin/bitsongcli tx content add '. $s1 . ' '. $s2 . ' '. $s3 . ' '. $path . ' -y -o json --from faucet --stream-price 1ubtsg --download-price 10ubtsg --right-holder "100:$RH1"';
-            \Log::info($cmd);
             $confirmation = shell_exec($cmd);
 
             Storage::delete($path);
