@@ -43,10 +43,9 @@ class BusinessController extends Controller
             $s1 = date('YmdHisu');
             $s2 = date('YmdHisu') - 22;
             $s3 = storage_path('app/tmp/') . 'meta.json';
-            shell_exec('RH1=bitsong1e35r5dyd7xmg8f790sy9nmfhwxqf3zw9mqppez');
-            $cmd = '/root/go/bin/bitsongcli tx content add '. $s1 . ' '. $s2 . ' '. $s3 . ' '. $path . ' -y -o json --from faucet --stream-price 1ubtsg --download-price 10ubtsg --right-holder "100:$RH1" 2>&1';
+            $cmd = 'sudo -u root RH1=bitsong1e35r5dyd7xmg8f790sy9nmfhwxqf3zw9mqppez; sudo -u root /root/go/bin/bitsongcli tx content add '. $s1 . ' '. $s2 . ' '. $s3 . ' '. $path . ' -y -o json --from faucet --stream-price 1ubtsg --download-price 10ubtsg --right-holder "100:$RH1" 2>&1';
             exec($cmd, $confirmation);
-
+            \Log::info($confirmation);
             Storage::delete($path);
             $tmp = json_decode(implode($confirmation));
 
