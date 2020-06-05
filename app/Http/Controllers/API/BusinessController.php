@@ -45,10 +45,10 @@ class BusinessController extends Controller
             $s3 = storage_path('app/tmp/') . 'meta.json';
             shell_exec('RH1=bitsong1e35r5dyd7xmg8f790sy9nmfhwxqf3zw9mqppez');
             $cmd = '/root/go/bin/bitsongcli tx content add '. $s1 . ' '. $s2 . ' '. $s3 . ' '. $path . ' -y -o json --from faucet --stream-price 1ubtsg --download-price 10ubtsg --right-holder "100:$RH1" 2>&1';
-            $confirmation = shell_exec($cmd);
+            exec($cmd, $confirmation);
 
             Storage::delete($path);
-            $tmp = json_decode($confirmation);
+            $tmp = json_decode(implode($confirmation));
 
             $item = Transaction::create([
                 'type' => 'FILE',
